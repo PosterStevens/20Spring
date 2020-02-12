@@ -1,14 +1,31 @@
+GitHub
+所有内容均发布在Github上，方便fork其他项目，也方便大家以后把这部分加入自己的简历，熟悉版本管理器
+
+
+
+Data Source
+|   source   | descripton |
+|---|--------|
+|[https://www.blog.google/technology/research/open-source-and-open-data/] | dsaf|
+| [https://research.google/research-areas/data-mining-and-modeling/] | asdfsd|
+
+
+
+
+
 Time Milestone
 我们以周为单位来计算时间
-|                |ASCII                          |HTML                         |
-|----------------|-------------------------------|-----------------------------|
-|March 5		 |`'Isn't this fun?'`            |'Isn't this fun?'        	   |
-|March 12		 |`'Isn't this fun?'`            |'Isn't this fun?'        	   |
-|March 19		 |`'Isn't this fun?'`            |'Isn't this fun?'        	   |
-|March 26		 |`'Isn't this fun?'`            |'Isn't this fun?'       	   |
-|April 2		 |`'Isn't this fun?'`            |'Isn't this fun?'            |
-|April 9         |`"Isn't this fun?"`            |"Isn't this fun?"            |
-|April 23        |`-- is en-dash, --- is em-dash`|-- is en-dash, --- is em-dash|
+|                |本周工作                        	  |完成进度                         |
+|----------------|------------------------------|---------------------------|
+|Feb 20			 |asdfasdfdas         				 |'0%'        	   |
+|Feb 27			 |`'Isn't this fun?'`       	  |	'`0%`        	   |
+|March 5		 |`'Isn't this fun?'`          	  |'0%'        	   |
+|March 12		 |`'Isn't this fun?'`        	    |'0%'        	   |
+|March 19		 |`'Isn't this fun?'`         	   |'0%'        	   |
+|March 26		 |`'Isn't this fun?'`         	   |'Isn't this fun?'       	   |
+|April 2		 |`'Isn't this fun?'`         	   |'Isn't this fun?'            |
+|April 9         |`"Isn't this fun?"`        	    |"Isn't this fun?"            |
+|April 23        |`-- is en-dash, --- is em-dash	`|-- is en-dash, --- is em-dash|
 
 
 # Welcome to StackEdit!
