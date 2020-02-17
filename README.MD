@@ -33,11 +33,16 @@ GitHub
 Data Source
 |   source   | descripton |
 |------------------------------------------------------------------|---------------------------|
-|[https://www.blog.google/technology/research/open-source-and-open-data/] 	| dsaf|
+|[https://www.blog.google/technology/research/open-source-and-open-data/] 	| open source 声明|
 | [https://research.google/research-areas/data-mining-and-modeling/] 		| asdfsd|
 |http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html/ https://github.com/carpedm20/BEGAN-tensorflow| 面部识别图片库在googledrive上有|
 |https://research.google/tools/datasets/					|Google公开数据库|
 |https://github.com/google-research/bert					| NLP 类似于翻译，需要仔细研读|
+|https://github.com/facundoolano/google-play-scraper				|Google player手动爬数据|
+|https://ai.googleblog.com/search/label/Health					|google最新研究方向|
+|https://research.google/teams/brain/						|Google ML团队页面|
+
+
 
 
 
@@ -54,10 +59,10 @@ Time Milestone
 |March 5	|数据清洗，分任务		 |'0%'        	   |
 |March 12	|试验不同模型和算法	|'0%'        	   |
 |March 19	|模型建立，主体代码框架完成      	   		|'0%'        	   |
-|March 26	| 调优，调参，酌情发布到Github上让其他人来看 		|'Isn't this fun?'       	   |
-|April 2	|验证排错     	 		 |'Isn't this fun?'            |
-|April 9        |到此时间点，应该完成全部工作，留最后一点时间来进行可视化工作，给poster打印留出时间	 |"Isn't this fun?"            |
-|April 23       |`-- is en-dash, --- is em-dash			`|-- is en-dash, --- is em-dash|
+|March 26	| 调优，调参，酌情发布到Github上让其他人来看 		|'0%      	   |
+|April 2	|验证排错     	 		 |0%          |
+|April 9        |到此时间点，应该完成全部工作，留最后一点时间来进行可视化工作，给poster打印留出时间	 |0%       |
+|April 23       |`-- is en-dash, --- is em-dash			`|0%|
 
 
 # Welcome to StackEdit!
