@@ -1,13 +1,30 @@
 GitHub
 所有内容均发布在Github上，方便fork其他项目，也方便大家以后把这部分加入自己的简历，熟悉版本管理器
 
+简要说明
+1.起始的出发点尽量选范围小一点的方向入手，如果一开始就设计了一个很宏大的架构，可能没有那么多的时间和精力来一步一步实现，反过来，一开始我们选择一个很窄的小点入手，随着项目的推进，不断加入新的features，这样比较可控。
+
+2.希望整个大的项目能拆分出来一些部分使用没门课上能学到的东西，一来可以把项目拆分出来作为某一门课的Final Project，二来可以向当值老师咨询。
+
+3.起始的topic选择有如下几个来源Github(Google),自己手爬，动手学习深度学习（一本书，里面有很多code），
+
+4.希望尝试的方向：click rate
+
+5.可以使用的工具：MangoDB / HBase / Spark Hadoop / Tenserflow Pytorch 
+
+
 
 
 Data Source
 |   source   | descripton |
-|---|--------|
-|[https://www.blog.google/technology/research/open-source-and-open-data/] | dsaf|
-| [https://research.google/research-areas/data-mining-and-modeling/] | asdfsd|
+|------------------------------------------------------------------|---------------------------|
+|[https://www.blog.google/technology/research/open-source-and-open-data/] 	| dsaf|
+| [https://research.google/research-areas/data-mining-and-modeling/] 		| asdfsd|
+|http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html/ https://github.com/carpedm20/BEGAN-tensorflow| 面部识别图片库在googledrive上有|
+|https://research.google/tools/datasets/					|Google公开数据库|
+|https://github.com/google-research/bert					| NLP 类似于翻译，需要仔细研读|
+
+
 
 
 
@@ -18,14 +35,14 @@ Time Milestone
 |                |本周工作                        	  |完成进度                         |
 |----------------|------------------------------|---------------------------|
 |Feb 20			 |asdfasdfdas         				 |'0%'        	   |
-|Feb 27			 |`'Isn't this fun?'`       	  |	'`0%`        	   |
-|March 5		 |`'Isn't this fun?'`          	  |'0%'        	   |
-|March 12		 |`'Isn't this fun?'`        	    |'0%'        	   |
-|March 19		 |`'Isn't this fun?'`         	   |'0%'        	   |
-|March 26		 |`'Isn't this fun?'`         	   |'Isn't this fun?'       	   |
-|April 2		 |`'Isn't this fun?'`         	   |'Isn't this fun?'            |
-|April 9         |`"Isn't this fun?"`        	    |"Isn't this fun?"            |
-|April 23        |`-- is en-dash, --- is em-dash	`|-- is en-dash, --- is em-dash|
+|Feb 27			 |`'Isn't this fun?'`       			  |	'`0%`        	   |
+|March 5		 |`'Isn't this fun?'`          	 		 |'0%'        	   |
+|March 12		 |`'Isn't this fun?'`        	    		|'0%'        	   |
+|March 19		 |`'Isn't this fun?'`         	   		|'0%'        	   |
+|March 26		 |`'Isn't this fun?'`         	   		|'Isn't this fun?'       	   |
+|April 2		 |`'Isn't this fun?'`         	 		 |'Isn't this fun?'            |
+|April 9         |`"Isn't this fun?"`        	   			 |"Isn't this fun?"            |
+|April 23        |`-- is en-dash, --- is em-dash			`|-- is en-dash, --- is em-dash|
 
 
 # Welcome to StackEdit!
