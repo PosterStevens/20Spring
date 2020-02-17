@@ -12,6 +12,21 @@ GitHub
 
 5.可以使用的工具：MangoDB / HBase / Spark Hadoop / Tenserflow Pytorch 
 
+6.流程：
+感觉我们找到数据后可以先用不同的异常值检测算法（随机森林，oneclassSVM）跑一下，看不同算法结果。
+可以看看不同变量缺失值的相关性；对缺失值和预测目标做下卡方检验；对不同算法找的异常值和预测目标做卡方检验。这一步可以找business implication。关键是为什么有异常值和缺失值，异常值和缺失值出现是因为噪声还是有很深的business implication
+
+之后可以试试不同降维方法（LLE，tsne，自编码器，玻尔兹曼机，embedding算法）的效果，降维做可视化。这一步也可以找business implication。也能决定类别变量的编码方法，是直接用粗暴的one hot，还是用一些embedding方法转为向量
+
+后期有几个方向
+
+第一个方向是走深度模型路线，先用迁移学习，元学习pretrain，决定架构；后期用explainable ML，lime，生成模型做模型解释
+
+第二个方向是传统路线，找特征，对提取的特征做预测
+
+
+估计会有几个需要解决的问题：稀疏矩阵编码（不同包的稀疏矩阵可能接口不同），有哪些部分是可以放到云上的，哪些是可以并行的，如何切分数据
+
 
 
 
@@ -34,15 +49,15 @@ Time Milestone
 我们以周为单位来计算时间
 |                |本周工作                        	  |完成进度                         |
 |----------------|------------------------------|---------------------------|
-|Feb 20			 |asdfasdfdas         				 |'0%'        	   |
-|Feb 27			 |`'Isn't this fun?'`       			  |	'`0%`        	   |
-|March 5		 |`'Isn't this fun?'`          	 		 |'0%'        	   |
-|March 12		 |`'Isn't this fun?'`        	    		|'0%'        	   |
-|March 19		 |`'Isn't this fun?'`         	   		|'0%'        	   |
-|March 26		 |`'Isn't this fun?'`         	   		|'Isn't this fun?'       	   |
-|April 2		 |`'Isn't this fun?'`         	 		 |'Isn't this fun?'            |
-|April 9         |`"Isn't this fun?"`        	   			 |"Isn't this fun?"            |
-|April 23        |`-- is en-dash, --- is em-dash			`|-- is en-dash, --- is em-dash|
+|Feb 20		|确定选题，并且征询教授意见，看方向是否可行		 |'5%'        	   |
+|Feb 27		|方向讨论和初步试验，一旦发现需要海量运算或者无法实现，及时调整方向  |	'`0%`        	   |
+|March 5	|数据清洗，分任务		 |'0%'        	   |
+|March 12	|试验不同模型和算法	|'0%'        	   |
+|March 19	|模型建立，主体代码框架完成      	   		|'0%'        	   |
+|March 26	| 调优，调参，酌情发布到Github上让其他人来看 		|'Isn't this fun?'       	   |
+|April 2	|验证排错     	 		 |'Isn't this fun?'            |
+|April 9        |到此时间点，应该完成全部工作，留最后一点时间来进行可视化工作，给poster打印留出时间	 |"Isn't this fun?"            |
+|April 23       |`-- is en-dash, --- is em-dash			`|-- is en-dash, --- is em-dash|
 
 
 # Welcome to StackEdit!
