@@ -50,6 +50,8 @@
 |https://github.com/facundoolano/google-play-scraper				|Google player手动爬数据|
 |https://ai.googleblog.com/search/label/Health					|google最新研究方向|
 |https://research.google/teams/brain/						|Google ML团队页面|
+|https://www.kaggle.com/netflix-inc/netflix-prize-data				|Netfilx Kaggel URL|
+|https://archive.org/download/nf_prize_dataset.tar				|Orignial Dataset|
 
 
 
