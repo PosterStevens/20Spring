@@ -52,6 +52,7 @@
 |https://research.google/teams/brain/						|Google ML团队页面|
 |https://www.kaggle.com/netflix-inc/netflix-prize-data				|Netfilx Kaggel URL|
 |https://archive.org/download/nf_prize_dataset.tar				|Orignial Dataset|
+|http://cs330.stanford.edu/							|Meta-learning|
 
 
 
