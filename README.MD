@@ -54,6 +54,7 @@
 |https://archive.org/download/nf_prize_dataset.tar				|Orignial Dataset|
 |http://cs330.stanford.edu/							|Meta-learning|
 |http://yann.lecun.com/exdb/mnist/						|笔迹鉴定|
+|http://cs230.stanford.edu/section/1/						|Stanford Deep Learning|
 
 
 
