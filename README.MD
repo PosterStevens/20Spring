@@ -53,6 +53,7 @@
 |https://www.kaggle.com/netflix-inc/netflix-prize-data				|Netfilx Kaggel URL|
 |https://archive.org/download/nf_prize_dataset.tar				|Orignial Dataset|
 |http://cs330.stanford.edu/							|Meta-learning|
+|http://yann.lecun.com/exdb/mnist/						|笔迹鉴定|
 
 
 
