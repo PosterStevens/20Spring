@@ -14,4 +14,4 @@ We recommend to put all function that's related to query and modify in this modu
 
 
 ### Detail of load_dataset
-load_click function can help us to sort by passing **load_dataset(sort=[attr1, attr2])**. In default, it sort click table by *user_ID* and *request_time*.
+load_click function can help us to sort by passing **load_dataset.load_click(sort=[attr1, attr2])**. In default, it sort click table by *user_ID* and *request_time*.
