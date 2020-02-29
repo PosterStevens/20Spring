@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from pandas import read_csv, to_datetime
 
 
@@ -9,6 +10,9 @@ PATH_SKU = './data/JD_sku_data.csv'
 PATH_ORDER = './data/JD_order_data.csv'
 
 
+# =============================================================================
+# Function to load data
+# =============================================================================
 
 
 def load_click(PATH_CLICK=PATH_CLICK, 
