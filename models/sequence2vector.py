@@ -9,7 +9,8 @@ class CrossProduct(layers.Layer):
 
 
 class Sequence2Vector(Model):
-    def __init__(self):
+    def __init__(self, embedding_dim, name=''):
+        super(Model, self).__init__(name=name)
         pass
         self.layer1 = layers.Embedding()
         self.layer2 = CrossProduct()

@@ -3,18 +3,19 @@
 import utils
 import dataset.load_dataset as data_load
 import dataset.select_data as data_select
+import dataset.join_dataset as data_join
 import pandas as pd
 import numpy as np
 
 import matplotlib.pyplot as plt
 
 from tqdm import tqdm
-
+a
 if __name__ == '__main__':
     print(data_load.load_click.__doc__)
     df_click = data_load.load_click()
     df_click['click_interval'] = df_click.request_time.diff(1)
-
+    
     
     
     plt.figure(figsize=(14,12))
@@ -95,4 +96,43 @@ if __name__ == '__main__':
     plt.savefig('figure/EDA/click_interval/0_all.png')
     
     utils.save_pickle(click_interval, 'click_interval.pk')
+    
+    
+# =============================================================================
+#     Analyze sku
+# =============================================================================
+    
+    df_sku = data_load.load_sku()
+    
+    group_brand = df_sku.groupby('brand_ID')
+    group_brand['sku_ID'].count()
+    
+    
+# =============================================================================
+#     
+# =============================================================================
+    
+    click_join = data_join.join_click_order()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
