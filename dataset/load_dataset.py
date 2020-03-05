@@ -51,4 +51,4 @@ def load_order(PATH_ORDER=PATH_ORDER):
     df = read_csv(PATH_ORDER)
     df.order_date = to_datetime(df.order_date)
     df.order_time = to_datetime(df.order_time)
-    return read_csv(PATH_ORDER)
+    return df
