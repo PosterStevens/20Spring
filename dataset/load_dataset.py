@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pandas import read_csv, to_datetime
+from pandas import read_csv, datetime, to_datetime
 
 
 
@@ -16,7 +16,8 @@ PATH_ORDER = './data/JD_order_data.csv'
 
 
 def load_click(PATH_CLICK=PATH_CLICK, 
-               sort=['user_ID', 'request_time']):
+               sort=['user_ID', 'request_time'],
+               frequency = False):
     '''
     load click table
     
@@ -32,6 +33,9 @@ def load_click(PATH_CLICK=PATH_CLICK,
     
     if sort:
         df.sort_values(sort, inplace=True)
+    if frequency == 'd':
+        df['request_date'] = df['request_time'].apply(
+                lambda x: datetime(x.year, x.month, x.day))
     return df
 
 
@@ -44,4 +48,7 @@ def load_sku(PATH_SKU=PATH_SKU):
 
 
 def load_order(PATH_ORDER=PATH_ORDER):
+    df = read_csv(PATH_ORDER)
+    df.order_date = to_datetime(df.order_date)
+    df.order_time = to_datetime(df.order_time)
     return read_csv(PATH_ORDER)

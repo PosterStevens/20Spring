@@ -15,3 +15,12 @@ def select_timerange(df, time1, time2, attr='request_time'):
     time2 = str2date(time2)
     expr = '({0}>=@time1) and ({0}<=@time2)'.format(attr)
     return df.query(expr)
+
+
+
+
+
+
+
+
+
