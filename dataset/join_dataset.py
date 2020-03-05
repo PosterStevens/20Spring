@@ -13,7 +13,7 @@ def join_click_order(cols1 = ['user_ID', 'sku_ID', 'request_date', 'request_time
     df = click_table.merge(order_table, how='outer',
                       left_on = ['user_ID', 'sku_ID', 'request_date'],
                       right_on = ['user_ID', 'sku_ID', 'order_date'])
-    df = df[~df.order_ID.isnull()]
+    df['if_order'] =  ~df.order_ID.isnull()
     return df
     
 
