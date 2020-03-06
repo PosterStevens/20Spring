@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import load_dataset
+from dataset import load_dataset
+import sys
+sys.path.append('../')
 
 
 
