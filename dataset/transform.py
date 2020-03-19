@@ -2,7 +2,7 @@
 from tqdm import tqdm
 import sys
 sys.path.append('../')
-#import utils
+import utils
 
 def to_sequence(df, attrs=['sku_ID',  'if_order', 'request_time', 'brand_ID'],
                  num_clicks=1000000):
@@ -29,7 +29,7 @@ def to_sequence(df, attrs=['sku_ID',  'if_order', 'request_time', 'brand_ID'],
         for _, attr in enumerate(attrs):
             attr_value = df[attr].iloc[i]
             sequence[_+1].append(attr_value)
-    #utils.save_pickle(sequences, 'click_sequence.pk')
+    utils.save_pickle(sequences, 'click_sequence.pk')
     sequences.append(sequence)
     return sequences
 
