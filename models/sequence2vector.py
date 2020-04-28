@@ -1,72 +1,137 @@
 # -*- coding: utf-8 -*-
 
-from keras import layers, Model, activations
+from keras import layers, activations
 from keras import backend as K
+from keras.models import Model
+from tensorflow import Tensor
+
+def empty_loss(y_true, y_pred):
+    return y_pred
 
 
 class CrossInnerProduct(layers.Layer):
+    '''
+    compute inner product between center item and other item
+    '''
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
 
-    def call(self, center_vec, windows_vecs, neg_vecs, buy_vec):
+    def call(self, inputs):
         '''
         把center和windows以及negative sampling里每一个向量做内积
+        
+        input:
+        ======================================
+        center_vec: tf.Tensor ----> with shape [data_size, embedding_dim, 1]
+                centor item vector after embedding
+        windows_vecs: tf.Tensor ----> with shape [data_size, embedding_dim, window_size]
+                a list of context item vector
+        neg_vecs: tf.Tensor ----> with shape [data_size, embedding_dim, negative_sampling_size]
+                a list of embedding vector of negative sampling item
+
+        output:
+        ======================================
+        output: tf.Tensor
+                inner product between center item vector and other input vector
         '''
-        
-        cross_center_windows = [] # center和windows的内积结果
-        cross_center_negtive = [] # center和negative sampling的内积结果
+        from tensorflow import stack, transpose
+        center_vec, windows_vecs, neg_vecs, buy_vec = inputs
 
-        for vec in windows_vecs:
-            # 循环windows里所有的向量
-            # 每个向量都和中心向量做内积
-            inner_product = K.dot(center_vec, K.transpose(vec))
-            cross_center_windows.append(inner_product)
-        for neg_vec in neg_vecs:
-            # 循环negative sampling里所有向量
-            # 每个向量都和中心向量做内积
-            # 结果取相反数
-            inner_product = -K.dot(center_vec, K.transpose(neg_vec))
-            cross_center_negtive.append(inner_product)
-        # 中心向量与购买商品的embedding向量做内积
-        cross_center_buy = K.dot(center_vec, K.transpose(buy_vec))
-        
-        # 将内积结果concatena
-        cross_center_windows = K.concatenate(cross_center_windows)
-        cross_center_negtive = K.concatenate(cross_center_negtive)
-        
-        # 将center与windows的内积结果
-        # center 与负采样的内积结果
-        # center 与购买向量的内积结果
-        # concate在一起
-        output = K.concatenate([cross_center_windows, 
-                                cross_center_negtive, cross_center_buy])
+        data_size = center_vec.shape[0] # size of data [数据集大小]
+        win_size = windows_vecs.shape[1]  # size of window [n gram 中 window大小]
+        neg_size = neg_vecs.shape[1] # number of negative sampling [负采样数量]
 
-        return K.concatenate([cross_center_windows, cross_center_negtive, cross_center_buy])
+        output1 = []
+        output2 = []
+        output3 = []
+        if not data_size:
+            for i in range(data_size):
+                inner_product_center_window = K.dot(windows_vecs[i,:,:], transpose(center_vec[i,:,:]))
+                inner_product_center_negative = -K.dot(neg_vecs[i,:,:], transpose(center_vec[i,:,:]))
+                inner_product_center_buy = K.dot(center_vec[i,:,:], transpose(buy_vec[i,:,:]))
+            
+                output1.append(inner_product_center_window)
+                output2.append(inner_product_center_negative)
+                output3.append(inner_product_center_buy)
+        else:
+            output1 = K.dot(windows_vecs, transpose(center_vec, perm=(0,2,1)))
+            output2 = K.dot(neg_vecs, transpose(center_vec, perm=(0,2,1)))
+            output3 = K.dot(buy_vec, transpose(center_vec, perm=(0,2,1)))
+        
+
+        return K.concatenate([stack(output1), stack(output2), stack(output3)], axis = 1)
+
     
-    def __call__(self, *args):
-        output = self.call(*args)
-        return output
+#    def __call__(self, *args):
+#        output = self.call(*args)
+#        return output
+
+
+
+class BinomialProbability(layers.Layer):
+    '''
+    Compute negative log likelihood (Binomial) using inner product.
+    '''
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+
+    def call(self, inner_product_result):
+        '''
+        Compute negative log likelihood and add it as loss
+        
+        input:
+        ======================================
+        inner_product_result: tf.Tensor 
+                inner product between center vector and other vector
+                with shape [size of data, window_size + negative_sampling_size + 1, 1]
+
+        output:
+        ======================================
+        output: tf.Tensor
+                Negative log likelihood of generating window
+        '''
+        from keras.activations import sigmoid
+        _ = 1e-10
+        binomial_probability = sigmoid(inner_product_result)
+        log_likelihood = -K.sum(K.log(binomial_probability+_))
+        self.add_loss(log_likelihood, inputs = inner_product_result)
+        return log_likelihood
+
+
 
 
 class Sequence2Vector(Model):
-    def __init__(self, embedding_dim, name=''):
-        super(Model, self).__init__(name=name)
-        pass
-        self.layer1 = layers.Embedding()
-        self.layer2 = CrossProduct()
-        self.layer3 = activations()
+    def __init__(self, num_items, embedding_dim, name=''):
+        super().__init__(name=name)
+
+        self.embedding_layer = layers.Embedding(input_dim=num_items, 
+                                                output_dim=embedding_dim)
+        self.inner_product_layer = CrossInnerProduct()
+        self.binomial_probability = BinomialProbability()
         
-    def call(self, x_center, x_positive, x_negative):
-        pass
-        v_center = self.layer1(x_center)
-        v_pos = self.layer1(x_positive)
-        v_neg = self.layer1(x_negative)
+    def call(self, inputs):
+
+        x_center, x_positive, x_negative, x_buy = inputs
+
+        v_center = self.to_vector(x_center)
+        v_pos = self.to_vector(x_positive)
+        v_neg = self.to_vector(x_negative)
+        v_buy = self.to_vector(x_buy)
         
-        h1 = self.layer2(v_center, v_pos, v_neg)
-        prob = self.layer3(h1)
+        inner_product_result = self.inner_product_layer([v_center, v_pos, v_neg, v_buy])
+        likelihood = self.binomial_probability(inner_product_result)
+
+        return likelihood
     
-    def compute_output_shape(self, input_shape):
-        pass
+    def to_vector(self, input_tensor):
+        '''
+        convert item into vector
+        '''
+        if not isinstance(input_tensor, Tensor):
+            input_tensor = K.variable(input_tensor)
+        embedding_vector = self.embedding_layer(input_tensor)
+        return embedding_vector
 
 
 
@@ -75,12 +140,16 @@ class Sequence2Vector(Model):
         '''
         测试内积层
         '''
-
+        from keras.layers import Embedding
+        e = Embedding(input_dim=100, output_dim=5)
         # 初始话内积层
         test_layer = CrossInnerProduct()
-
+        likli = BinomialProbability()
         # 做一个center向量
-        center = K.variable([[1.1,2.0,1.0,1.0]])
+        center = e(K.variable([[1], [3]]))
+        vec1s = e(K.variable([[3,1,4], [1,1,4]]))
+        vec2s = e(K.variable([[2,5,1], [3,2,1]]))
+        buy1 = e(K.variable([[7], [0]]))
 
         # windows宽度为1
         windowsvec = [K.variable([[2,2,2,2.0]]),
@@ -94,8 +163,20 @@ class Sequence2Vector(Model):
         buy = K.variable([[1,1,1,.01]])
 
         # 测试计算结果
-        result = test_layer(center, windowsvec, negvec, buy)
+        result = test_layer(center, vec1s, vec2s, buy1)
+        prob = likli(result)
         print(K.eval(result))
+        print(result.shape)
+        print(K.eval(prob))
 
+        center = [[0], [10], [20], [0]]
+        windows = [[1,2,3,4], [11,12,13,14], [21,22,23,23], [0,1,1,3]]
+        negtive = [[11,21,31,14], [21,2,23,4], [1,2,13,13], [10,21,21,13]]
+        buy = [[1], [11], [21], [1]]
 
+        model = Sequence2Vector(40, 2)
+        model.compile(optimizer='adam', loss = empty_loss)
+        model.fit(x=[center, windows, negtive, buy], epochs=10)
+        print(model.to_vector([0]))
+        print(model.to_vector([1]))
 
