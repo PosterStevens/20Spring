@@ -6,7 +6,7 @@ from keras.models import Model
 from tensorflow import Tensor
 
 def empty_loss(y_true, y_pred):
-    return y_pred
+    return K.mean(y_pred)
 
 
 class CrossInnerProduct(layers.Layer):
@@ -55,7 +55,7 @@ class CrossInnerProduct(layers.Layer):
                 output3.append(inner_product_center_buy)
         else:
             output1 = K.dot(windows_vecs, transpose(center_vec, perm=(0,2,1)))
-            output2 = K.dot(neg_vecs, transpose(center_vec, perm=(0,2,1)))
+            output2 = -K.dot(neg_vecs, transpose(center_vec, perm=(0,2,1)))
             output3 = K.dot(buy_vec, transpose(center_vec, perm=(0,2,1)))
         
 
@@ -94,7 +94,7 @@ class BinomialProbability(layers.Layer):
         from keras.activations import sigmoid
         _ = 1e-10
         binomial_probability = sigmoid(inner_product_result)
-        log_likelihood = -K.sum(K.log(binomial_probability+_))
+        log_likelihood = -K.mean(K.log(binomial_probability+_))
         self.add_loss(log_likelihood, inputs = inner_product_result)
         return log_likelihood
 
