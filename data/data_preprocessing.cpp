@@ -15,7 +15,7 @@ vector<vector<string>> to_n_gram(vector<string>&, int n, ofstream& outfile);
 void write_into_file(ofstream&, vector<string>);
 
 
-// Input: window_size, input_filename, *featureNames
+// Input: window_size, input_filename, outfilename,  *featureNames
 int main(int argc, char* argv[]) {
 	ifstream infile; // infile object used to read data
 	ofstream outfile; // final output file
@@ -28,19 +28,22 @@ int main(int argc, char* argv[]) {
 	string filename = argv[2];
 	string outfilename = argv[3];
 	// receive argument from command line
-	for (int i = 4; argv[i] != NULL; ++i) desired_attr.push_back(argv[i]); 
-	
+	for (int i = 4; argv[i] != NULL; ++i) {
+		desired_attr.push_back(argv[i]); cout << argv[i] << ", ";
+	} cout << endl;
 	// open input file, open output file
 	infile.open(filename);
-	outfile.open("n_grams.csv");
+	outfile.open(outfilename);
 
 	// read the first line: the header line
 	// split the header line
 	// define column name to column index map
 	getline(infile, line);	
 	vector<string> header = split_line(line, ",");
-	for (int i = 0; i < header.size(); i++) dict[header[i]] = i;
-
+	for (int i = 0; i < header.size(); i++){
+		dict[header[i]] = i; cout << header[i] << ", ";
+	} cout << endl;
+	
 	
 	// loop over all the line in input file
 	// if the userId this line is equal to the userId of the previous line, 
@@ -52,20 +55,22 @@ int main(int argc, char* argv[]) {
 	int j = 0;
 	while (getline(infile, line)) {
 		vector<string> data_line = split_line(line, ",");
-		//cout << (data_line[userIdCol] == userId) << endl; 
+		//cout << line << endl; 
 		if (data_line[userIdCol] != userId){
 			userId = data_line[userIdCol];
 			if (j == 0) j+=1; else to_n_gram(sequence_data, window_size, outfile);
 			sequence_data.clear();
 			//continue;
 		}
-
-		int j = 0;
+		j ++;
+		if ((j % 10000) == 0){
+			 cout << line << endl;
+		}
 		string data = "";
 		for (string attr: desired_attr){
 			int col = dict[attr];
 			data += data_line[col];
-			data += "_";
+			data += "__";
 		}
 		sequence_data.push_back(data);// for (string data: sequence_data) cout << data << ","; cout << endl;
 	} 
@@ -78,21 +83,24 @@ int main(int argc, char* argv[]) {
 // split line into vector of string
 vector<string> split_line(const string& line, const string& delimeter){
 	vector<string> output;
-	if ("" == line) return output; // if the line is null, return empty vector
-	char * strs = new char[line.length()+1]; // convert string into char[]
-	strcpy(strs, line.c_str()); // copy content in string to char
+	int left = 0, span = 0;
+	for (int i = 0; i < line.size(); ++i){
+		if (line[i] == delimeter[0]){
+			if (span == 0){
+				output.push_back("");
+			}
+			else{
+				output.push_back(line.substr(left, span));
+			}
+			left = i + 1;
+			span = 0;
+		}
+		else{
+			span ++;
+		}
 
-	char * d = new char[delimeter.length()+1]; // convert string into char[]
-	strcpy(d, delimeter.c_str()); // copy content in string to char
-
-	char * p = strtok(strs, d);
-
-	while (p) {
-		string s = p;
-		output.push_back(s);
-		p = strtok(NULL, d); 
 	}
-	free(strs); free(d);
+	if (span != 0 ) output.push_back(line.substr(left, span)); else output.push_back("");
 	return output;
 }
 
