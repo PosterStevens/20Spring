@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
 	// if it's not equal, convert sequence into n-gram, then write into output file
 
 	string userId = ""; // initiate userId as null
-	int userIdCol = dict["user_Id"]; // use name2index map to get index of user_Id column
+	int userIdCol = dict["user_ID"]; // use name2index map to get index of user_Id column
 	int j = 0;
 	while (getline(infile, line)) {
 		vector<string> data_line = split_line(line, ",");
