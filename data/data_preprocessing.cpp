@@ -26,8 +26,9 @@ int main(int argc, char* argv[]) {
 	int window_size = stoi(argv[1]); // windows size, a windows size of 2 indicates a 5-gram
 	//cout << "please specify window size > "; cin >> window_size;
 	string filename = argv[2];
+	string outfilename = argv[3];
 	// receive argument from command line
-	for (int i = 3; argv[i] != NULL; ++i) desired_attr.push_back(argv[i]); 
+	for (int i = 4; argv[i] != NULL; ++i) desired_attr.push_back(argv[i]); 
 	
 	// open input file, open output file
 	infile.open(filename);
