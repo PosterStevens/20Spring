@@ -25,10 +25,11 @@ int main(int argc, char* argv[]) {
 	vector<string> sequence_data; // a sentence of item
 	int window_size = stoi(argv[1]); // windows size, a windows size of 2 indicates a 5-gram
 	//cout << "please specify window size > "; cin >> window_size;
-	string filename = argv[2];
-	string outfilename = argv[3];
+	string sortColumnName = argv[2];
+	string filename = argv[3];
+	string outfilename = argv[4];
 	// receive argument from command line
-	for (int i = 4; argv[i] != NULL; ++i) {
+	for (int i = 5; argv[i] != NULL; ++i) {
 		desired_attr.push_back(argv[i]); cout << argv[i] << ", ";
 	} cout << endl;
 	// open input file, open output file
@@ -51,8 +52,9 @@ int main(int argc, char* argv[]) {
 	// if it's not equal, convert sequence into n-gram, then write into output file
 
 	string userId = ""; // initiate userId as null
-	int userIdCol = dict["user_ID"]; // use name2index map to get index of user_Id column
+	int userIdCol = dict[sortColumnName]; // use name2index map to get index of user_Id column
 	int j = 0;
+	string previous_data = ""; // to prevent repetitious item
 	while (getline(infile, line)) {
 		vector<string> data_line = split_line(line, ",");
 		//cout << line << endl; 
@@ -63,7 +65,7 @@ int main(int argc, char* argv[]) {
 			//continue;
 		}
 		j ++;
-		if ((j % 10000) == 0){
+		if ((j % 100000) == 0){
 			 cout << line << endl;
 		}
 		string data = "";
@@ -72,8 +74,12 @@ int main(int argc, char* argv[]) {
 			data += data_line[col];
 			data += "__";
 		}
-		sequence_data.push_back(data);// for (string data: sequence_data) cout << data << ","; cout << endl;
+		if (previous_data != data){
+			sequence_data.push_back(data);// for (string data: sequence_data) cout << data << ","; cout << endl;
+			previous_data = data;
+		}
 	} 
+
 	
 	outfile.close();
 	infile.close();
@@ -115,7 +121,8 @@ vector<vector<string>> to_n_gram(vector<string>& sequence, int n, ofstream& outf
 				n_gram.push_back("NONE");
 			}
 			else{
-				n_gram.push_back(sequence[i+j]);
+				string current_gram = sequence[i+j];
+				n_gram.push_back(current_gram);
 			}
 		}
 		output.push_back(n_gram);
