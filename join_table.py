@@ -14,11 +14,12 @@ if __name__ == "__main__":
     print('begin to merge click table and sku table')
     df_click_order_sku = df_click_order.merge(df_sku, left_on='sku_ID',
                                                 right_on = 'sku_ID')
-    print('write data into click_order_sku table')
-    df_click_order_sku = df_click_order_sku.query('user_ID != "-"')    
     
-
-    df_click_order_sku.to_csv('./data/click_order_sku.csv')
+    df_click_order_sku = df_click_order_sku.query('user_ID != "-"')    
+    print('sort data using userID and request time')
+    df_click_order_sku.sort_values(['user_ID', 'request_time'], inplace=True)
+    print('write data into click_order_sku table')
+    df_click_order_sku.to_csv('./data/click_order_sku.csv', index=None)
 
     del df_click_order_sku, df_sku
 
@@ -27,5 +28,6 @@ if __name__ == "__main__":
     print('begin to merge click table and user table')
     df_click_order_user = df_click_order.merge(df_user, left_on='user_ID',
                                                     right_on='user_ID')
+    df_click_order_user.sort_values(['sku_ID', 'request_time'], inplace=True)
     print('write data into click_order_user table')
-    df_click_order_user.to_csv('./data/click_order_user.csv')
+    df_click_order_user.to_csv('./data/click_order_user.csv', index=None)
